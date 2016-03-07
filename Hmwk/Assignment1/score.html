@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Score</title>
+
+</head>
+<body>
+<h1>Grade generator</h1>
+<script>
+//Declare Variable
+var tstScr = prompt("What is your test score?"); //Asking user for the test score
+var grade; //Grade dependent of score
+//Define grades range
+grade=(tstScr>=90)?"A":
+(tstScr>=80)?"B":
+(tstScr>=70)?"C":
+(tstScr>=60)?"D":"F";
+
+//Output the inputs and the calculation
+var str="<h1>Test Score = "+tstScr+"</h1>";
+str+=    "<h1>Grade = "+grade+"</h1>";
+document.write(str);
+</script>
+</body>
+</html>
+
