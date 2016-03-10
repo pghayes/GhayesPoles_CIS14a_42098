@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>"Paycheck"</title>
+	<meta name="generator" content="CSE HTML Validator (http://www.htmlvalidator.com/)">
+</head>
+
+<body>
+<script>
+	//Declare Variables
+	var hrsWrkd= prompt("What is the worked hour?");//Hours worked in hrs
+	var payRate= prompt("What is the pay rate?");//pay rate in $'s/hr
+	var dblTime=20;//Hour at which double time occurs
+	var trbleTime=40;//Hour at which triple time occurs
+	var payChk;//Pay check in $'s
+
+	//Calculate the paycheck
+	if(hrsWrkd<=dblTime){
+		payChk=hrsWrkd*payRate;
+	}else if(hrsWrkd<=trbleTime) {
+		payChk=dblTime*payRate+2*payRate*(hrsWrkd-dblTime);
+	} else{
+		payChk=dblTime*payRate+2*payRate*(trbleTime-dblTime)+3*payRate*(hrsWrkd-trbleTime);
+	}
+
+	//Output the inputs and the calculateion
+	var str="<h1>Hours worked = "+hrsWrkd+"</h1>";
+	str+=   "<h1>Pay rate = $"+payRate+ "/hr</h1>";
+	str+=   "<h1>Double time starts at "+dblTime+" hours</h1>";
+	str+=	"<h1>Triple time starts at "+trbleTime+" hours</h1>";
+	str+=    "<h1>Pay Check = $"+payChk+"</h1>";
+	document.write(str);
+
+</script>
+</body>
+</html>
