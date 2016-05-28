@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--
+	Poles Ghayes
+	CIS-14A-42098
+	4/27/2016
+-->
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Survey Answer</title>
+	<script type="text/javascript" src="getForm.js"></script>
+	</head>
+
+<body style="background-color:lightgrey;">
+
+		<center><h2>Survey Answer</h2></center>
+	
+	
+	<!--view actual fedral budget graph -->
+	<style>
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+	</style>	
+		
+	<script>
+		//Get the information from the local URL
+		var url=document.location.href;
+		//Call the getForm function to place into an object
+		var $_GET = getForm(url);
+		var uAnswer = $_GET;
+		// convert object to string
+		var text=JSON.stringify($_GET);
+		var str=localStorage.getItem("results");
+		// Testing the results
+		console.log(text);
+		
+		// Parse the information back into an array.
+		// Update the array and save it into the local storage
+		if(str) {
+			var obj= JSON.parse(str);
+			var number = obj.length;
+			obj[number] = uAnswer;
+			str = JSON.stringify(obj);
+			localStorage.setItem("results",str);
+		}
+		else { 
+			var obj = [];
+			obj[0] = uAnswer;
+			var str = JSON.stringify(obj);
+			localStorage.setItem("results",str);
+		}
+
+		// Display the array
+		document.write("Military Budget is "+ uAnswer.Q1 +" than 20 % of the Federal Budget</br>");
+		document.write("NASA's budget is "+ uAnswer.Q2 +" than 5% of the Federal Budget</br>");
+		document.write("Welfare and Entitlements is "+ uAnswer.Q3 	 +" than 65% of the Federal Budget</br>");
+		
+		
+	</script>
+
+		<h3>Actual Expenditures</h3>
+		<!--image info -->
+       <img src="FedralBudget.png" alt="FedralBudget" style="width:368px;height:679px;">
+		<!-- Submit button to show total result -->
+		<form action="totalResults.html">
+			<input type="submit" value="Total Answers" />
+		</form>
+
+	</body>
+</html>

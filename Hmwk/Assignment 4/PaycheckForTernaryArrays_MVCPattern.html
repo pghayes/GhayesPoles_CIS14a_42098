@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="generator" content="CSE HTML Validator (https://www.htmlvalidator.com/)">
+</head>
+
+<body>
+	<script>
+		//Declare Variables
+		var hrLimit=72;//Hours per week limit
+		var dblTime=20;//Hour at which double rate occurs
+		var tripleTime=40;//Hour at which triple rate occurs
+		var payRate=10;//Pay rate in $'s/hour
+		var taxRate=0.10;//Declare Tax rate
+		var grossPay=[];//Declare Gross pay array
+		var hours=[];//Declare the hours array
+		var netPay=[];//Declare teh netPay array
+		
+		//Output the inputs
+		var str=   "<h1>Pay Rate = $"+payRate+" $'s/hr</h1>";
+		str+=   "<h1>Double Rate at "+dblTime+" hrs</h1>";
+		str+=	"<h1>Triple Rate at "+tripleTime+" hrs</h1>";
+		document.write(str);
+		
+		//Calculate the gross pay information first
+		for(var hrsWrkd=0,row=0;hrsWrkd<=hrLimit;hrsWrkd+=0.15,row++){
+			//Calculate the gross pay
+			grossPay[row]=(hrsWrkd<dblTime)? hrsWrkd*payRate:
+				(hrsWrkd<tripleTime)? dblTime*payRate+2*payRate*(hrsWrkd-dblTime):
+				dblTime*payRate+2*payRate*(tripleTime-dblTime)+3*payRate*(hrsWrkd-tripleTime);
+			//Adding to hours array.
+			hours[row]=hrsWrkd;
+			//Calculate the net pay
+			netPay[row]=grossPay[row]-(grossPay[row]*taxRate);
+		}
+		
+		//Table Heading
+		str='<table border="1" style="width:auto">';
+		str+="<tr><th>Hours</th><th>Gross Pay $</th><th>Pay Rate</th><th>Tax Rate</th><th>Net Pay</th></tr>";
+		//Loop over all the hours that could be worked
+		for(var row=0;row<hours.length;row++){
+          //Add the hours worked, the gross pay, the pay rate, the tax rate, and the net pay to the table string
+          str+="<tr>";
+          str+="<td><center>"+hours[row].toFixed(2)+"</center></td>";
+          str+="<td><center>"+grossPay[row].toFixed(2)+"</center></td>";
+          str+="<td><center>"+payRate+"</center></td>";
+		  str+="<td><center>"+taxRate+"</center></td>";
+		  str+="<td><center>"+netPay[row].toFixed(2)+"</center></td>";
+		  str+="</tr>";
+		}
+		str+="</table>";
+		//Display the string
+		document.write(str);
+	</script>
+</body>
+</html>

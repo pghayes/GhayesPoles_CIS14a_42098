@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!--
+	Poles Ghayes
+	CIS-14A-42098
+	4/27/2016
+	This page shows survey results for all users
+-->
+<html>
+    <head>
+        <title>Survey Results</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="getForm.js"></script>
+    </head>
+    <body style="background-color:lightgrey;">
+        <h3>Survey Results</h3>
+        <fieldset>
+            <legend>Question 1</legend>
+            How large is the military budget?<br>
+            <var id="Q1M"></var>% of users answered &GT;20% of the Federal Budget<br>
+            <var id="Q1L"></var>% of users answered &lt;20% of the Federal Budget<br>
+        </fieldset>
+        <fieldset>
+            <legend>Question 2</legend>
+            How large is NASA's budget?<br>
+            <var id="Q2M"></var>% of users answered &GT;5% of the Federal Budget<br>
+            <var id="Q2L"></var>% of users answered &lt;5% of the Federal Budget<br>
+        </fieldset>
+        <fieldset>
+            <legend>Question 3</legend>
+            How large is the budget for Welfare and Entitlements?<br>
+            <var id="Q3M"></var>% of users answered &GT;65% of the Federal Budget<br>
+            <var id="Q3L"></var>% of users answered &lt;65% of the Federal Budget<br>
+        </fieldset>
+        <h3>Actual Expenditures</h3>
+		<!--image info -->
+       <img src="FedralBudget.png" alt="FedralBudget" style="width:368px;height:679px;">
+		
+        <form action="index.html">
+            <button type="submit">Start Over</button>
+            <button onclick="deleteResults()">Delete Results</button>
+        </form>
+        <script>
+            var str = localStorage.getItem("results");
+            console.log(str); //display contents of local storage item in console
+			//Parse the information back into an array
+            var results = JSON.parse(str);
+			// Generate a counter for all answers
+            var answersCount = results.length;
+			
+			var Q1More = 0;
+			var Q1Less = 0;
+			var Q2More = 0;
+			var Q2Less = 0; 
+			var Q3More = 0;
+			var Q3Less = 0;
+			
+			// Count value for each question
+			for(var i = 0; i < results.length; i++){
+				var obj = results[i];
+				
+				if(obj.Q1 == "more") {
+					Q1More += 1;
+				}
+				else {
+					Q1Less += 1;
+				}
+				
+				if(obj.Q2 == "more"){
+					Q2More += 1;
+				}
+				else {
+					Q2Less +=1;
+				}
+				
+				if(obj.Q3 == "more") {
+					Q3More += 1;
+				}
+				else {
+					Q3Less +=1;
+				}
+            }
+			
+			// Calculate answers percentage
+			var Q1MorePercent = ((Q1More / answersCount) * 100).toFixed(1);
+			var Q1LessPercent = ((Q1Less / answersCount) * 100).toFixed(1);
+			var Q2MorePercent = ((Q2More / answersCount) * 100).toFixed(1);
+			var Q2LessPercent = ((Q2Less / answersCount) * 100).toFixed(1); 
+			var Q3MorePercent = ((Q3More / answersCount) * 100).toFixed(1);
+			var Q3LessPercent = ((Q3Less / answersCount) * 100).toFixed(1);
+			
+			// Display total results
+            document.getElementById("Q1M").innerHTML = Q1MorePercent;
+            document.getElementById("Q1L").innerHTML = Q1LessPercent;
+            document.getElementById("Q2M").innerHTML = Q2MorePercent;
+            document.getElementById("Q2L").innerHTML = Q2LessPercent;
+            document.getElementById("Q3M").innerHTML = Q3MorePercent;
+            document.getElementById("Q3L").innerHTML = Q3LessPercent;			
+            
+        </script>
+    </body>
+</html>
