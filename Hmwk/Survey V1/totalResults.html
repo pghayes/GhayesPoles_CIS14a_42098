@@ -55,7 +55,7 @@
 			var Q3More = 0;
 			var Q3Less = 0;
 			
-			// Count value for each question
+			// Count answers for each question
 			for(var i = 0; i < results.length; i++){
 				var obj = results[i];
 				
@@ -81,7 +81,7 @@
 				}
             }
 			
-			// Calculate answers percentage
+			// Calculate percentage
 			var Q1MorePercent = ((Q1More / answersCount) * 100).toFixed(1);
 			var Q1LessPercent = ((Q1Less / answersCount) * 100).toFixed(1);
 			var Q2MorePercent = ((Q2More / answersCount) * 100).toFixed(1);
