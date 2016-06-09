@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<!--
+	Poles Ghayes
+	CIS-14A-42098
+	06/08/16
+-->
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Survey Answers</title>
+	<script type="text/javascript" src="getForm.js"></script>
+	
+	
+	<style>
+	img {
+		max-width: 100%;
+		height: auto;
+		display: block;
+	}
+	</style>	
+		
+</head>
+
+<body style="background-color:lightgrey;">
+
+	<center><h2>Survey Answer</h2></center>
+	
+	<h3> Your Answers</h3>
+	<div id="divAnswerOne">
+	</div>
+	<div id="divAnswerTwo">
+	</div>
+	<div id="divAnswerThree">
+	</div>
+	
+	<br/>
+	
+	<button onclick="ShowTotal()">Total Answers</button>
+	<button onclick="deleteResults()">Delete Results</button>
+	<a href="index.html">Start Over</a>
+	<br />
+	<!-- Display total answers percentage marked with the appropriate color-->
+	<div id="divTotal" style="display:none; class="answer_list">
+		<h3> Survey Totals </h3>
+		<fieldset>
+			<legend>Question 1</legend>
+			How large is the military budget?<br>
+			<var id="Q1M"></var>% of users answered &GT;20% of the Federal Budget<br>
+			<var id="Q1L"></var>% of users answered &lt;20% of the Federal Budget<br>
+		</fieldset>
+		<fieldset>
+			<legend>Question 2</legend>
+			How large is NASA's budget?<br>
+			<var id="Q2M"></var>% of users answered &GT;5% of the Federal Budget<br>
+			<var id="Q2L"></var>% of users answered &lt;5% of the Federal Budget<br>
+		</fieldset>
+		<fieldset>
+			<legend>Question 3</legend>
+			How large is the budget for Welfare and Entitlements?<br>
+			<var id="Q3M"></var>% of users answered &GT;65% of the Federal Budget<br>
+			<var id="Q3L"></var>% of users answered &lt;65% of the Federal Budget<br>
+		</fieldset>
+	</div>
+	<br />
+<script>
+    
+	// Get Session value
+    var str = localStorage.getItem("session");
+    var obj = JSON.parse(str);
+
+	// Check if the user answered the questions
+    if (obj) {
+        if (obj.surveyResult.Q1) {
+            uAnswer = obj.surveyResult;
+        }
+    }
+
+	var divOne = document.getElementById("divAnswerOne");
+	var divTwo = document.getElementById("divAnswerTwo");
+	var divThree = document.getElementById("divAnswerThree");
+	
+	// Display user's answer marked with the appropriate color
+	divOne.innerHTML = "Military Budget is "+ uAnswer.Q1 +" than 20 % of the Federal Budget</br>";
+	if(uAnswer.Q1.toLowerCase() === "less") {
+		divOne.style.backgroundColor = "green";
+	}
+	else {
+		divOne.style.backgroundColor = "red";
+	}
+	
+	divTwo.innerHTML = "NASA's budget is "+ uAnswer.Q2 +" than 5% of the Federal Budget</br>";
+	
+	if(uAnswer.Q2.toLowerCase() === "less") {
+		divTwo.style.backgroundColor = "green";
+	}
+	else {
+		divTwo.style.backgroundColor = "red";
+	}
+	
+	divThree.innerHTML = "Welfare and Entitlements is "+ uAnswer.Q3 +" than 65% of the Federal Budget</br>";
+	
+	if(uAnswer.Q3.toLowerCase() === "more") {
+		divThree.style.backgroundColor = "green";
+	}
+	else {
+		divThree.style.backgroundColor = "red";
+	}
+	
+	// 
+	function ShowTotal() {
+		var divTotal = document.getElementById("divTotal");
+		divTotal.style.display = 'block'; 
+		// retrieve results from local Storage
+		var str = localStorage.getItem("results");
+		// Parse string to an object
+		var results = JSON.parse(str);
+		// set the counter
+		var answersCount = results.length;
+		
+		var Q1More = 0;
+		var Q1Less = 0;
+		var Q2More = 0;
+		var Q2Less = 0; 
+		var Q3More = 0;
+		var Q3Less = 0;
+
+		// Loop to count answers for each question
+		for(var i = 0; i < results.length; i++){
+			var obj = results[i];
+			
+			if(obj.Q1 == "more") {
+				Q1More += 1;
+			}
+			else {
+				Q1Less += 1;
+			}
+			
+			if(obj.Q2 == "more"){
+				Q2More += 1;
+			}
+			else {
+				Q2Less +=1;
+			}
+			
+			if(obj.Q3 == "more") {
+				Q3More += 1;
+			}
+			else {
+				Q3Less +=1;
+			}
+		}
+		// Calculate percentage
+		var Q1MorePercent = ((Q1More / answersCount) * 100).toFixed(1);
+		var Q1LessPercent = ((Q1Less / answersCount) * 100).toFixed(1);
+		var Q2MorePercent = ((Q2More / answersCount) * 100).toFixed(1);
+		var Q2LessPercent = ((Q2Less / answersCount) * 100).toFixed(1); 
+		var Q3MorePercent = ((Q3More / answersCount) * 100).toFixed(1);
+		var Q3LessPercent = ((Q3Less / answersCount) * 100).toFixed(1);
+		
+		// Mark each answer with green or red color based on the value
+		document.getElementById("Q1M").innerHTML = Q1MorePercent;
+		document.getElementById("Q1M").style.backgroundColor = "red";
+		
+		document.getElementById("Q1L").innerHTML = Q1LessPercent;
+		document.getElementById("Q1L").style.backgroundColor = "green";
+		
+		document.getElementById("Q2M").innerHTML = Q2MorePercent;
+		document.getElementById("Q2M").style.backgroundColor = "red";
+		
+		document.getElementById("Q2L").innerHTML = Q2LessPercent;
+		document.getElementById("Q2L").style.backgroundColor = "green";
+		
+		document.getElementById("Q3M").innerHTML = Q3MorePercent;
+		document.getElementById("Q3M").style.backgroundColor = "green";
+		
+		document.getElementById("Q3L").innerHTML = Q3LessPercent;
+		document.getElementById("Q3L").style.backgroundColor = "red";
+	}
+</script>
+<h3>Actual Expenditure</h3>
+<!--view actual fedral budget graph -->
+<img src="FedralBudget.png" alt="FedralBudget" style="width:368px;height:679px;">
+<br/>
+
+</body>
+</html>

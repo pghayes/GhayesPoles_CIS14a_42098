@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="generator" content="CSE HTML Validator (https://www.htmlvalidator.com/)">
+</head>
+
+<body>
+	<script>
+	//Declare the 2-Dim Array
+	var NROWS=12,NCOLS=12;
+	var twoD=[];
+	for(var rows=0;rows<NROWS;rows++){
+		twoD[rows]=[];
+	}
+	//Fill the array
+	for(var rows=0;rows<NROWS;rows++){
+		for(var cols=0;cols<NCOLS;cols++){
+			twoD[rows][cols]=(rows+1)*(cols+1);
+		}
+	}
+	//Display the table
+	var str="";
+		str+="<table border='1'>";
+    for(var rows=0;rows<NROWS;rows++){
+        str+="<tr>";
+		for(var cols=0;cols<NCOLS;cols++){
+			str+=("<td>"+twoD[rows][cols]+"</td>");
+		}
+		str+="</tr>";
+	}
+	str+="</table>";
+	document.write(str);
+	</script>
+</body>
+</html>

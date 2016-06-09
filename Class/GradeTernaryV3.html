@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="generator" content="CSE HTML Validator (https://www.htmlvalidator.com/)">
+</head>
+
+<body>
+	<script>
+		//Declare Variables
+		var tstScr=55;//Test Score
+		var grade;//Grade dependent of score
+		
+		//Calculate the Paycheck and determine any overtime due
+		grade=(tstScr>=90)?"A":
+			  (tstScr>=80)?"B":
+			  (tstScr>=70)?"C":
+			  (tstScr>=60)?"D":
+			  (tstScr< 60)?"F":"";
+		
+		//Output the inputs and the calculation
+		var str="<h1>Test Score = "+tstScr+"</h1>";
+		str+=   "<h1>Grade = "+grade+"</h1>";
+		document.write(str);
+	</script>
+</body>
+</html>

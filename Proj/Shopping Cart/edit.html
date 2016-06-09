@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+	Poles Ghayes
+	CIS-14A-42098
+	06/08/16
+-->
+<html>
+<head>
+    <title>Simple Store</title>
+    <script type="text/javascript" src="getForm.js"></script>
+</head>
+<body>
+    <div id="divContainer"></div>
+    <input type='button' value='Update Cart' onclick='updateCart()' />
+    <input type='button' value='Continue to Store' onclick='location.assign("index.html")' />
+    <input type="button" value="Pay" onclick="PayCart()" />
+
+    <br />
+    <div id="divTotal"></div>
+
+    <script type="text/javascript">
+		// Retrieve cart from local storage
+        var str = localStorage.getItem("cart");
+		// parse cart object
+        var obj = JSON.parse(str);
+        var div = document.getElementById("divContainer");
+        var total = 0;
+		//Display the array
+        if (obj && obj.length > 0) {
+            for (var i = 0; i < obj.length; i++) {
+                div.innerHTML += "Product Name: " + obj[i]["name"] + " <br/>";
+                div.innerHTML += "Price: " + obj[i]["price"] + " <br/>";
+                div.innerHTML += "Description: " + obj[i]["description"] + " <br/>";
+                div.innerHTML += "Quantity: <input type='text' value='1' id='txtCart" + i + "' /> <br/>"
+                div.innerHTML += "<input type='button' value='Delete' onclick='RemoveMe(" + i + ")'/> <br/> <br/>";
+
+                total += obj[i]["price"];
+            }
+        }
+
+        document.getElementById("divTotal").innerHTML = "Total: $" + total;
+		// Update any change to items quantity by user
+        function updateCart() {
+            var str = localStorage.getItem("cart");
+            var obj = JSON.parse(str);
+            var div = document.getElementById("divTotal");
+            var total = 0;
+
+            if (obj && obj.length > 0) {
+                for (var i = 0; i < obj.length; i++) {
+                    var qty = document.getElementById("txtCart" + i).value;
+                    total += (obj[i]["price"] * qty);
+                }
+            }
+
+            div.innerHTML = "Total: $" + total;
+        }
+		// Delete object from cart
+        function RemoveMe(index) {
+            var str = localStorage.getItem("cart");
+            var obj = JSON.parse(str);
+
+            if (obj && obj.length > 0) {
+                obj.splice(index, 1);
+
+                str = JSON.stringify(obj);
+                localStorage.setItem("cart", str);
+
+                location.assign("edit.html");
+            }
+        }
+		// Notify user with payment and delete all items on the list, then go back to main page.
+        function PayCart() {
+            alert("Thank you for your payment.");
+            deleteCart();
+            location.assign("index.html");
+        }
+
+    </script>
+</body>
+</html>

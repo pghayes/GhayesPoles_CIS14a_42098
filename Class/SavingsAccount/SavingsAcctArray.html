@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Savings Account</title>
+</head>
+
+<body>
+<script type="text/javascript">
+	//Declare the known values
+	var principle=100;//$100 Dollars as principle
+	var intRate=0.05;//Interest for a year
+	//Declare the arrays
+	var year=Array();
+	var balance=Array();
+	var intEarned=Array();
+	//Number of years to calculate savings balance
+	var nYears=50;
+	//Fill arrays with the yearly interest earned and ending balance
+	//Starting and zero then loop for nYears
+	year[0]=0;
+	balance[0]=principle;
+	intEarned[0]=principle*intRate;
+	for(var years=1;years<=nYears;years++){
+		year[years]=years;
+		balance[years]=balance[years-1]+intEarned[years-1];
+		intEarned[years]=balance[years]*intRate;
+	}
+	//Display the information
+	document.write("<h1>Savings Table</h1>");
+	for(var years=0;years<=nYears;years++){
+		document.write(year[years].toFixed(2)+" ");
+		document.write(balance[years].toFixed(2)+" ");
+		document.write(intEarned[years].toFixed(2));
+		document.write("</br>");
+	}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<!--
+	Poles Ghayes
+	CIS-14A-42098
+	06/08/16
+-->
+<html>
+<head>
+    <title>Federal Budget Survey</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="getForm.js"></script>
+</head>
+<body style="background-color:lightgrey;">
+    <h1>Federal Budget Survey</h1>
+    <!-- form elements -->
+    <form action="usersAnswer.html" method="get">
+        <fieldset>
+            <legend><b>Question 1</b></legend>
+            How large is the Military Budget?<br>
+            <input type="radio" name="Q1" id="radQ1More" value="more" required>more than 20 % of the Federal Budget<br>
+            <input type="radio" name="Q1" id="radQ1Less" value="less" required>less than 20 % of the Federal Budget<br>
+        </fieldset>
+
+        <fieldset>
+            <legend><b>Question 2</b></legend>
+            How large is NASA's budget?<br>
+            <input type="radio" name="Q2" id="radQ2More" value="more" required>more than 5% of the Federal Budget<br>
+            <input type="radio" name="Q2" id="radQ2Less" value="less" required>less than 5% of the Federal Budget<br>
+        </fieldset>
+
+        <fieldset>
+            <legend><b>Question 3</b></legend>
+            How large is the budget for Welfare and Entitlements?<br>
+            <input type="radio" name="Q3" id="radQ3More" value="more" required>more than 65% of the Federal Budget<br>
+            <input type="radio" name="Q3" id="radQ3Less" value="less" required>less than 65% of the Federal Budget<br>
+        </fieldset>
+
+        <input name="Submit" type="submit" onclick="SaveAnswers()" />
+    </form>
+
+    <script>
+        // check if the user took the survey already.
+        // if taken, go to userAnswer page
+        // if not, stay on this page and add results to the user object.
+
+        var str = localStorage.getItem("session");
+        var obj = JSON.parse(str);
+
+        if (obj) {
+			// Check if the user has already taken the survey, if so, show him his results
+			if (obj.surveyResult.Q1) {
+                location.assign("usersAnswer.html");
+            }
+        }
+
+        function SaveAnswers() {
+            var str = localStorage.getItem("session");
+			var obj = JSON.parse(str);
+
+			if (obj) {
+				// Check if the user selected more, if not then he must have selected less.
+				var q1Answer = document.getElementById("radQ1More").checked;
+
+				if (q1Answer == false) {
+					obj.surveyResult.Q1 = "Less";
+				}
+				else {
+					obj.surveyResult.Q1 = "More";
+				}
+
+				var q2Answer = document.getElementById("radQ2More").checked;
+
+				if (q2Answer == false) {
+					obj.surveyResult.Q2 = "Less";					
+				}
+				else {
+					obj.surveyResult.Q2 = "More";
+				}
+
+				var q3Answer = document.getElementById("radQ3More").checked;
+
+				if (q3Answer == false) {
+					obj.surveyResult.Q3 = "Less";
+				}
+				else {
+					obj.surveyResult.Q3 = "More";
+				}
+
+
+				// Find the current user object from all users and assign him the survey results
+				var str = localStorage.getItem("users");
+
+				if (str) {
+					var allUsers = JSON.parse(str);
+
+					for (var i = 0; i < allUsers.length; i++) {
+						var user = allUsers[i];
+
+						if (obj.username == user.username && obj.password == user.password) {
+							allUsers[i] = obj;
+						}
+					}
+				}
+
+				// Update his survey results value to the local storage
+				localStorage.setItem("users", JSON.stringify(allUsers));
+
+				// Update the session with his new survey results
+				localStorage.setItem("session", JSON.stringify(obj));
+
+				var strTotal = localStorage.getItem("results");
+
+				// Update the total results local storage with the new survey answers
+				if (strTotal) {
+					var surveyResults = JSON.parse(strTotal);
+					var number = surveyResults.length;
+					surveyResults[number] = obj.surveyResult;
+					strTotal = JSON.stringify(surveyResults);
+					localStorage.setItem("results", strTotal);
+				}
+				else {
+					var surveyResults = [];
+					surveyResults[0] = obj.surveyResult;
+					var strTotal = JSON.stringify(surveyResults);
+					localStorage.setItem("results", strTotal);
+				}
+			}
+        }
+    </script>
+</body>
+</html>

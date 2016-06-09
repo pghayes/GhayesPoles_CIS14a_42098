@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<!--
+	Poles Ghayes
+	CIS-14A-42098
+	06/08/16
+-->
+
+<html>
+<head>
+    <title>Federal Budget Survey</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="getForm.js"></script>
+</head>
+<body style="background-color:lightgrey;">
+    <h1>Federal Budget Survey</h1>
+
+    <form id="regForm" name="regForm" method="post" action="surveyForm.html">
+        <div style="width: 50%; float: left;">
+            <fieldset id="register">
+                <legend><b>Register</b></legend>
+                <p>
+                    <div style="width: 150px; float:left;">
+                        <label for="firstName">First Name</label>
+                    </div>
+                    <div style="float: left;">
+                        <input name="firstName" type="text" id="firstName" tabindex="0" />
+                    </div>
+                </p>
+                <p style="clear:both;">
+                    <div style="width: 150px; float:left;">
+                        <label for="lastName">Last Name</label>
+                    </div>
+                    <div style="float: left;">
+                        <input name="lastName" type="text" id="lastName" tabindex="1" />
+                    </div>
+                </p>
+                <p style="clear:both;">
+                    <div style="width: 150px; float:left;">
+                        <label for="email">Email</label>
+                    </div>
+                    <div style="float: left;">
+                        <input name="email" type="text" id="email" tabindex="2" />
+                    </div>
+                </p>
+                <p style="clear:both;">
+                    <div style="width: 150px; float:left;">
+                        <label for="username">Username</label>
+                    </div>
+                    <div style="float: left;">
+                        <input name="username" type="text" id="username" tabindex="3" />
+                    </div>
+                </p>
+                <p style="clear:both;">
+                    <div style="width: 150px; float:left;">
+                        <label for="password">Password</label>
+                    </div>
+                    <div style="float: left;">
+                        <input name="password" type="text" id="password" tabindex="4" />
+                    </div>
+					
+                </p>
+				<p style="clear:both;">
+                    <div style="width: 250px; float:left;">
+                        <label for="password">Password must contain:<br /> 1 number,<br />
+						1 Uppercase letter,<br /> 1 lowercase letter,<br /> 1 special character: @#$!%<br />
+						6 to 20 characters in length</label>
+                    </div>
+                    <div style="float: right ;">
+  
+                    </div>
+					
+                </p>
+					
+                    
+                <p style="clear:both;">
+                    <br />
+                    <span id="errorMessage"style="color: red;"></span>
+                </p>
+                <p style="clear:both;">
+                    <input type="submit" name="RegBtn" id="submitBtn" value="Register" tabindex="300" />
+                </p>
+            </fieldset>
+        </div>
+        <div style="width: 50%; float:left;">
+            <fieldset id="login">
+                <legend><b>Login</b></legend>
+
+                <p>
+                    <div style="width: 150px; float:left;">
+                        <label for="loginusername">Username</label>
+                    </div>
+                    <div style="float: left;">
+                        <input name="loginusername" type="text" id="loginusername" tabindex="5" />
+                    </div>
+                </p>
+                <p style="clear:both;">
+                    <div style="width: 150px; float:left;">
+                        <label for="loginpassword">Password</label>
+                    </div>
+                    <div style="float: left;">
+                        <input name="loginpassword" type="password" id="loginpassword" tabindex="6" />
+                    </div>
+                </p>
+
+                <p style="clear:both;">
+                    <br/>
+					<span id="loginErrorMessage" style="color: red;"></span>
+                </p>
+                <p style="clear:both;">
+                    <br />
+                    <input type="button" name="loginBtn" id="btnLogin" value="Login" onclick="Login()" tabindex="300" />
+                </p>
+            </fieldset>
+        </div>
+    </form>
+
+
+
+    <script>
+
+        // handle the form submit event
+        function prepareEventHandlers() {
+            document.getElementById("regForm").onsubmit = function () {
+
+                var reName = /^[a-zA-Z]{2,15}$/;
+				var usrName = /^[a-zA-Z0-9]{2,15}$/;
+                var reEmail = /^[a-zA-Z]([a-zA-Z0-9_\-])+([\.][a-zA-Z0-9_]+)*\@((([a-zA-Z0-9\-])+\.){1,2})([a-zA-Z0-9]{2,40})$/;
+                var rePswd = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$!%]).{6,20})/;
+                //Input Values
+                var firstname = document.getElementById("firstName");
+                var lastname = document.getElementById("lastName");
+                var username = document.getElementById("username");
+                var password = document.getElementById("password");
+                var email = document.getElementById("email");
+
+                //Check each input to make sure that it makes the regex
+				// and show error message if requirments are not satisfied
+                if (firstname.value.match(reName) != null) {
+                    firstname.style.color = "#0000ff";
+                } else {
+					document.getElementById("errorMessage").innerHTML = "First Name is not Valid";
+                    //firstname.value = "First name is not Valid";
+                    firstname.style.color = "#ff0000";
+                    return false;
+                }
+
+                if (lastname.value.match(reName) != null) {
+                    lastname.style.color = "#0000ff";
+                } else {
+                    document.getElementById("errorMessage").innerHTML = "Last Name is not Valid";
+                    lastname.style.color = "#ff0000";
+                    return false;
+                }
+
+				if (email.value.match(reEmail) != null) {
+                    email.style.color = "#0000ff";
+                } else {
+                    document.getElementById("errorMessage").innerHTML = "Email is not Valid";
+                    email.style.color = "#ff0000";
+                    return false;
+                }
+
+				if (username.value.match(usrName) != null) {
+                    username.style.color = "#0000ff";
+                } else {
+                    document.getElementById("errorMessage").innerHTML = "Username is not Valid";
+                    username.style.color = "#ff0000";
+                    return false;
+                }
+				
+                if (password.value.match(rePswd) != null) {
+                    password.style.color = "#0000ff";
+                } else {
+                    document.getElementById("errorMessage").innerHTML = "Password is not Valid";
+                    password.style.color = "#ff0000";
+                    return false;
+                }
+
+                
+				// Create new object for each person that registers and save their survey results to that object as well
+                var newUser = { firstName: firstname.value, lastName: lastname.value, email: email.value, username: username.value, password: password.value, surveyResult: {} };
+
+                // Get list of all the users
+				var str = localStorage.getItem("users");
+
+				// Check if the users object has any users, if so, then add the registering user to the array
+                if (str) {
+                    var obj = JSON.parse(str);
+                    var number = obj.length;
+                    obj[number] = newUser;
+                    str = JSON.stringify(obj);
+                    localStorage.setItem("users", str);
+                }
+                else {
+					// if no users have ever registered before, add him to be the first index of the array
+                    var obj = [];
+                    obj[0] = newUser;
+                    var str = JSON.stringify(obj);
+                    localStorage.setItem("users", str);
+                }
+
+				// Delete any previous sessions, if anyone else was logged in and then a new person registered we want to log the new person in instead.
+                deleteSession();
+
+				// Set the session to be the newly registered user
+                localStorage.setItem("session", JSON.stringify(newUser));
+            };
+        }
+
+        function Login() {
+            var username = document.getElementById("loginusername");
+            var password = document.getElementById("loginpassword");
+
+            var loggedInuser = null;
+
+            var str = localStorage.getItem("users");
+
+            if (str) {
+                var obj = JSON.parse(str);
+
+                for (var i = 0; i < obj.length; i++) {
+                    var user = obj[i];
+
+                    if (username.value == user.username && password.value == user.password) {
+                        loggedInuser = obj[i];
+                    }
+                }
+
+				if(loggedInuser !== null) {
+					deleteSession();
+
+					localStorage.setItem("session", JSON.stringify(loggedInuser));
+
+					location.assign("surveyForm.html");
+				}
+				else {
+					document.getElementById("loginErrorMessage").innerHTML = "Invalid username or password";
+				}
+            }
+
+        }
+
+        // when the document loads
+        window.onload = function () {
+            prepareEventHandlers();
+        };
+
+    </script>
+</body>
+</html>

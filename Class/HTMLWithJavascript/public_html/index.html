@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            /*
+             * Author:  Dr. Mark E. Lehr
+             * Date:    Feb 24th, 2016
+             * Purpose: Testing concepts from the reference
+             */
+        </script>
+    </head>
+    <body>
+        <div>Test Out Concepts Like Variables, Operators, Literals</div>
+        <script>
+            //Declare variables
+            var str;
+            var a=5;       //Integer
+            var b=010;     //Octal 10 = Decimal 8
+            var c=0x10;    //Hex 10 = Decimal 16
+            var d=5.11e1;  //Scientific of 51.1
+            var e="Mark";  //String data type
+            var f=true;    //Boolean true
+            var g=false;   //Boolean false
+            var h="\u00e9";//Accented e
+            var i;         //Undefined
+            //Create a table with values referenced to the above
+            str='<table border="1" style="width:100%">';
+                str+="<tr>";
+                    str+=("<td>"+a+"</td>");
+                    str+=("<td>"+b+"</td>");
+                    str+=("<td>"+c+"</td>");
+                str+="</tr>";
+                str+="<tr>";
+                    str+=("<td>"+d+"</td>");
+                    str+=("<td>"+e+"</td>");
+                    str+=("<td>"+f+"</td>");
+                str+="</tr>";
+                str+="<tr>";
+                    str+=("<td>"+g+"</td>");
+                    str+=("<td>"+h+"</td>");
+                    str+=("<td>"+i+"</td>");
+                str+="</tr>";
+            str+="</table>";
+            document.write(str);
+        </script>
+    </body>
+</html>
