@@ -2,8 +2,8 @@
 	// Poles Ghayes
 	// CIS-14A-42098
 	// 06/08/16
- 
-		// Products objects
+	
+	// Products objects
 	function AddProduct1() {
 		var product = { name: "Product1", price: 289, description: "Quad-Core 2.40 GHz 4GB RAM 500GB HD DVD RW." };
 		AddtoCart(product);
@@ -36,10 +36,11 @@
 	function AddtoCart(product) {
 		var str = localStorage.getItem("cart");
 		var cartInfo = document.getElementById("divCart");
+		var isExternal = window.location.pathname.indexOf("/items/") > 0;
 		
 		// check if there is any object store in cart
 		// if not, create new object and convert it to string 
-		//then save it to local storage
+		// then save it to local storage
 		if (str) {
 			var obj = JSON.parse(str);
 			var number = obj.length;
@@ -48,7 +49,13 @@
 			localStorage.setItem("cart", str);
 
 			var cartDescription = obj.length + " items in Cart."
-			cartInfo.innerHTML = "<a style='text-align: right;' href='edit.html'>" + cartDescription + "</a>";
+			
+			if(isExternal == true) {
+				cartInfo.innerHTML = "<a style='text-align: right;' href='../edit.html'>" + cartDescription + "</a>";	
+			}
+			else {
+				cartInfo.innerHTML = "<a style='text-align: right;' href='edit.html'>" + cartDescription + "</a>";
+			}
 		}
 		else {
 			var obj = [];
@@ -57,6 +64,31 @@
 			localStorage.setItem("cart", str);
 
 			var cartDescription = "1 item in Cart."
+			cartInfo.innerHTML = "<a style='text-align: right;' href='edit.html'>" + cartDescription + "</a>";
+		}
+	}
+	
+	function ShowShoppingCart() {
+		
+		var isExternal = window.location.pathname.indexOf("/items/") > 0;
+		
+		var str = localStorage.getItem("cart");
+		var cartDescription = "";
+		
+		if(str) {
+			var obj = JSON.parse(str);
+			cartDescription = obj.length + " items in Cart.";
+		}
+		else {
+			cartDescription = "0 items in Cart.";
+		}
+		
+		var cartInfo = document.getElementById("divCart");
+		
+		if(isExternal == true) {
+			cartInfo.innerHTML = "<a style='text-align: right;' href='../edit.html'>" + cartDescription + "</a>";	
+		}
+		else {
 			cartInfo.innerHTML = "<a style='text-align: right;' href='edit.html'>" + cartDescription + "</a>";
 		}
 	}
